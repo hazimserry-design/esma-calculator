@@ -4,24 +4,21 @@ import { useEffect, useState } from "react";
 import { useLang } from "./LanguageProvider";
 import { UI, type FunnelCopy } from "@/lib/content";
 
-const ACCENT: Record<
-  string,
-  { bar: string; chip: string; text: string }
-> = {
+const ACCENT: Record<string, { bar: string; chip: string; text: string }> = {
   TOF: {
-    bar: "from-emerald-soft to-emerald-glow",
-    chip: "bg-emerald-glow/15 text-emerald-soft",
-    text: "text-emerald-soft",
+    bar: "from-green-500 to-green-400",
+    chip: "bg-green-500/15 text-green-400",
+    text: "text-green-400",
   },
   MOF: {
-    bar: "from-gold-soft to-gold-deep",
-    chip: "bg-gold/15 text-gold-soft",
-    text: "text-gold-soft",
+    bar: "from-blue-500 to-blue-400",
+    chip: "bg-blue-500/15 text-blue-400",
+    text: "text-blue-400",
   },
   BOF: {
-    bar: "from-emerald-glow to-emerald-600",
-    chip: "bg-emerald-glow/15 text-emerald-soft",
-    text: "text-emerald-soft",
+    bar: "from-orange-500 to-orange-400",
+    chip: "bg-orange-500/15 text-orange-400",
+    text: "text-orange-400",
   },
 };
 
@@ -65,7 +62,6 @@ export function FunnelCard({ funnel, percentage, delay }: FunnelCardProps) {
         </div>
       </div>
 
-      {/* Bar */}
       <div className="mt-4 h-2 w-full overflow-hidden rounded-full bg-white/[0.06]">
         <div
           className={`h-full rounded-full bg-gradient-to-r ${accent.bar} transition-all duration-[1100ms] ease-out`}
