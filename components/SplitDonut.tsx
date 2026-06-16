@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 import type { EsmaSplit } from "@/lib/types";
 
 const COLORS = {
-  tof: "#34d399",
-  mof: "#e8c074",
-  bof: "#10b981",
+  tof: "#22c55e", // green
+  mof: "#3b82f6", // blue
+  bof: "#f97316", // orange
 };
 
 export function SplitDonut({ split }: { split: EsmaSplit }) {
