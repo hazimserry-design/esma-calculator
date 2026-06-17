@@ -192,24 +192,24 @@ export const FUNNELS: FunnelCopy[] = [
 export const WEEKLY_OPTIONS = [3, 5, 7, 10, 14, 20];
 
 export const UI = {
-  brand: { en: "ESMA", ar: "ESMA" },
+  brand: { en: "HOMUS", ar: "HOMUS" },
   brandSub: {
-    en: "Content Split Calculator",
-    ar: "حاسبة توزيع المحتوى",
+    en: "AI Content Strategy Engine",
+    ar: "محرّك استراتيجية المحتوى",
   },
   langLabel: { en: "العربية", ar: "English" },
   // Landing
   badge: {
-    en: "Premium Content Strategy Tool",
-    ar: "أداة احترافية لاستراتيجية المحتوى",
+    en: "Free AI Content Strategy Engine",
+    ar: "محرّك استراتيجية محتوى مجاني بالذكاء الاصطناعي",
   },
   headline: {
-    en: "Discover Your Ideal ESMA Content Split",
-    ar: "اعرف التوزيع المثالي للمحتوى بتاعك",
+    en: "Know Exactly What Content To Post Next",
+    ar: "اعرف بالظبط تنزل إيه بعد كده",
   },
   subheadline: {
-    en: "Answer 8 quick questions and instantly discover how much of your content should focus on awareness, trust, and conversion.",
-    ar: "جاوب على 8 أسئلة سريعة واعرف فورًا المحتوى بتاعك المفروض يتوزع إزاي بين الانتشار والثقة والمبيعات.",
+    en: "Answer a few quick questions and get a personalized content strategy: your funnel split, a 30-day calendar, ready-to-post ideas, and your biggest growth opportunity.",
+    ar: "جاوب على كام سؤال سريع واطلع باستراتيجية محتوى مخصصة ليك: توزيع القمع، تقويم 30 يوم، أفكار جاهزة للنشر، وأكبر فرصة نمو عندك.",
   },
   startCta: { en: "Start Assessment", ar: "ابدأ التقييم" },
   landingPoints: [
@@ -254,12 +254,12 @@ export const UI = {
   seeResults: { en: "See Results", ar: "شوف النتيجة" },
   // Results
   resultsTitle: {
-    en: "Your ESMA Content Split",
-    ar: "التوزيع المثالي للمحتوى بتاعك",
+    en: "Your Content Strategy",
+    ar: "استراتيجية المحتوى بتاعك",
   },
   resultsSubtitle: {
-    en: "Based on your current stage, here is where your content energy should go.",
-    ar: "بناءً على مرحلتك الحالية، ده المكان اللي لازم تركز فيه طاقة المحتوى بتاعك.",
+    en: "Based on your answers, here is your personalized plan — what to post, why, and how to grow.",
+    ar: "بناءً على إجاباتك، دي خطتك المخصصة — تنزل إيه، وليه، وتكبر إزاي.",
   },
   examplesLabel: { en: "Content ideas", ar: "أفكار محتوى" },
   plannerTitle: {
@@ -284,9 +284,264 @@ export const UI = {
     ar: "توزيع محتوى ESMA",
   },
   footer: {
-    en: "Part of the premium content creation course.",
-    ar: "جزء من كورس صناعة المحتوى الاحترافي.",
+    en: "HOMUS — the content system that helps you execute. homus.biz",
+    ar: "HOMUS — النظام اللي بيساعدك تنفّذ المحتوى صح. homus.biz",
   },
+
+  // Industry step
+  industryQuestion: {
+    en: "What type of business do you run?",
+    ar: "بتشتغل في نوع بيزنس إيه؟",
+  },
+  industryOptional: {
+    en: "Optional — this helps us personalize your ideas.",
+    ar: "اختياري — بيساعدنا نخصّص الأفكار ليك.",
+  },
+  skip: { en: "Skip", ar: "تخطّي" },
+
+  // Content ideas
+  ideasTitle: { en: "Content Ideas You Can Post", ar: "أفكار محتوى تقدر تنزلها" },
+  ideasSubtitle: {
+    en: "Ready-to-use ideas for each stage, tailored to your business.",
+    ar: "أفكار جاهزة لكل مرحلة، متظبطة على نوع البيزنس بتاعك.",
+  },
+  copyIdeas: { en: "Copy Ideas", ar: "انسخ الأفكار" },
+
+  // Calendar
+  calendarTitle: { en: "Your 30-Day Content Calendar", ar: "تقويم المحتوى لـ 30 يوم" },
+  calendarSubtitle: {
+    en: "A full month of posts that follow your split.",
+    ar: "شهر كامل من البوستات على نفس توزيعك.",
+  },
+  copyCalendar: { en: "Copy Calendar", ar: "انسخ التقويم" },
+  dayLabel: { en: "Day", ar: "يوم" },
+  colDay: { en: "Day", ar: "اليوم" },
+  colStage: { en: "Stage", ar: "المرحلة" },
+  colFormat: { en: "Format", ar: "الشكل" },
+  colIdea: { en: "Post idea", ar: "فكرة البوست" },
+
+  // Why this split
+  whyTitle: { en: "Why This Split Makes Sense", ar: "ليه التوزيع ده مظبوط ليك" },
+  overFocusLabel: {
+    en: "What if you over-focus on one stage?",
+    ar: "هيحصل إيه لو ركّزت على مرحلة واحدة بس؟",
+  },
+
+  // Health score
+  healthTitle: { en: "Content Health Score", ar: "تقييم صحة المحتوى" },
+  healthSubtitle: {
+    en: "A quick read on how healthy your content engine is.",
+    ar: "نظرة سريعة على صحة ماكينة المحتوى بتاعتك.",
+  },
+  whyScore: { en: "Why this score", ar: "ليه الدرجة دي" },
+  nextActions: { en: "Next actions", ar: "خطوات تعملها بعد كده" },
+
+  // Bottleneck
+  bottleneckTitle: { en: "Your Biggest Content Bottleneck", ar: "أكبر مشكلة في المحتوى عندك" },
+  fixFirstLabel: { en: "What to fix first", ar: "تصلّح إيه الأول" },
+  recommendedPosts: { en: "5 recommended post types", ar: "5 أنواع بوستات منصوح بيها" },
+
+  // Benchmark
+  benchmarkTitle: { en: "How Your Split Compares", ar: "توزيعك مقارنة بمين" },
+  benchmarkSubtitle: {
+    en: "Guidance, not a rulebook — see which stage you're closest to.",
+    ar: "ده إرشاد مش قانون — شوف أقرب مرحلة ليك.",
+  },
+  yourSplitLabel: { en: "You", ar: "إنت" },
+  closestLabel: { en: "Closest match", ar: "أقرب تطابق" },
+
+  // CTA
+  ctaTitle: {
+    en: "Want us to turn this into a full content system for your business?",
+    ar: "عايزنا نحوّل ده لنظام محتوى كامل للبيزنس بتاعك؟",
+  },
+  ctaSubtext: {
+    en: "We can help you build a content strategy that attracts the right audience, builds trust, and converts attention into revenue.",
+    ar: "نقدر نساعدك تبني استراتيجية محتوى بتجيب الجمهور الصح، وتبني ثقة، وتحوّل الاهتمام لفلوس.",
+  },
+  bookConsultation: { en: "Book a Consultation", ar: "احجز استشارة" },
+  messageWhatsapp: { en: "Message on WhatsApp", ar: "كلّمنا على واتساب" },
+
+  // Ask HOMUS
+  askTitle: { en: "Ask HOMUS", ar: "اسأل HOMUS" },
+  askSubtitle: {
+    en: "Pick a question to get a quick answer based on your results.",
+    ar: "اختار سؤال وهتلاقي إجابة سريعة على حسب نتيجتك.",
+  },
+  askPickHint: {
+    en: "Tap a question above to see your answer.",
+    ar: "دوس على سؤال فوق عشان تشوف الإجابة.",
+  },
+
+  // Lead capture
+  leadTitle: { en: "Where should we send your report?", ar: "نبعتلك التقرير فين؟" },
+  leadSubtitle: {
+    en: "Add your details and we'll keep your report handy. You can skip too.",
+    ar: "سيب بياناتك ونحتفظلك بالتقرير. وتقدر تتخطّى برضه.",
+  },
+  nameLabel: { en: "Name", ar: "الاسم" },
+  emailLabel: { en: "Email", ar: "الإيميل" },
+  whatsappLabel: { en: "Phone number", ar: "رقم الموبايل" },
+  downloadReport: { en: "Download Report", ar: "حمّل التقرير" },
+  skipAndDownload: { en: "Skip and Download", ar: "تخطّى وحمّل" },
+  reportNote: {
+    en: "The report (PDF) is in English. The whole site stays in your language.",
+    ar: "التقرير (PDF) باللغة الإنجليزية. الموقع كله بيفضل بلغتك.",
+  },
+
+  // Business description step
+  bizDescTitle: { en: "Describe your business in one sentence.", ar: "اوصف البيزنس بتاعك في جملة واحدة." },
+  bizDescOptional: {
+    en: "Optional but recommended — this makes your whole strategy more personal.",
+    ar: "اختياري بس بننصح بيه — بيخلّي الاستراتيجية كلها أقرب ليك.",
+  },
+  bizDescPlaceholder: {
+    en: "e.g. I help dentists get more patients.",
+    ar: "مثال: بساعد دكاترة الأسنان يجيبوا مرضى أكتر.",
+  },
+  bizDescExamplesLabel: { en: "Examples", ar: "أمثلة" },
+  bizDescExamples: [
+    { en: "I help dentists get more patients.", ar: "بساعد دكاترة الأسنان يجيبوا مرضى أكتر." },
+    { en: "I sell handmade furniture.", ar: "ببيع أثاث هاند ميد." },
+    { en: "I run a luxury flower delivery service.", ar: "عندي خدمة توصيل ورد لاكشري." },
+    { en: "I own a gym.", ar: "عندي جيم." },
+    { en: "I sell software to restaurants.", ar: "ببيع سوفت وير للمطاعم." },
+    { en: "I help people lose weight.", ar: "بساعد الناس تخس." },
+  ],
+
+  // Execution confidence question
+  confidenceQuestion: {
+    en: "How confident are you that you can execute this plan consistently?",
+    ar: "قد إيه واثق إنك تقدر تنفّذ الخطة دي بانتظام؟",
+  },
+  confidenceOptions: [
+    { en: "Very confident", ar: "واثق جدًا" },
+    { en: "Somewhat confident", ar: "واثق لحد ما" },
+    { en: "Not confident", ar: "مش واثق" },
+  ],
+  confidenceNotTitle: {
+    en: "Most businesses don't fail because they lack information.",
+    ar: "أغلب البيزنس مابيفشلش لأنه مش عارف.",
+  },
+  confidenceNotBody: {
+    en: "They fail because they lack systems. That is exactly why HOMUS exists.",
+    ar: "بيفشل لأنه مفيش عنده نظام. وده بالظبط سبب وجود HOMUS.",
+  },
+
+  // Business summary (AI read)
+  aiReadTitle: { en: "What we understand about your business", ar: "اللي فهمناه عن البيزنس بتاعك" },
+
+  // Strategy pack
+  strategyTitle: { en: "Your Personalized Content Strategy", ar: "استراتيجية المحتوى المخصصة ليك" },
+  strategySubtitle: {
+    en: "Generated from your answers — hooks, angles, offers and more.",
+    ar: "اتعملت من إجاباتك — هوكات، زوايا، عروض، وأكتر.",
+  },
+  hooksLabel: { en: "Content hooks", ar: "هوكات للمحتوى" },
+  anglesLabel: { en: "Content angles", ar: "زوايا للمحتوى" },
+  leadMagnetsLabel: { en: "Lead magnet ideas", ar: "أفكار ليد ماجنت" },
+  ctaIdeasLabel: { en: "Call-to-action ideas", ar: "أفكار دعوات للتواصل" },
+  offersLabel: { en: "Offer suggestions", ar: "اقتراحات عروض" },
+  copyStrategy: { en: "Copy Strategy", ar: "انسخ الاستراتيجية" },
+
+  // Content opportunity
+  opportunityTitle: { en: "Your Biggest Content Opportunity", ar: "أكبر فرصة في المحتوى عندك" },
+  oppLimiting: { en: "What's limiting your growth", ar: "اللي بيوقف نموك دلوقتي" },
+  oppWhy: { en: "Why it matters", ar: "ليه ده مهم" },
+  oppIgnored: { en: "If you ignore it", ar: "لو سِبته من غير حل" },
+  oppFixed: { en: "If you fix it", ar: "لو ظبطته" },
+  growthLabel: { en: "Growth opportunities", ar: "فرص للنمو" },
+  mistakesLabel: { en: "Biggest mistakes to avoid", ar: "أكبر أخطاء تتجنّبها" },
+  nextStepsLabel: { en: "Your next steps", ar: "خطواتك الجاية" },
+
+  // Execution gap
+  gapTitle: {
+    en: "The calculator shows you WHAT to post. The HOMUS system shows you HOW to execute.",
+    ar: "الحاسبة بتوريك تنزل إيه. ونظام HOMUS بيوريك تنفّذ إزاي.",
+  },
+  gapGivesLabel: { en: "This free tool gives you", ar: "الأداة المجانية دي بتديك" },
+  gapNeedsLabel: { en: "But real execution needs", ar: "بس التنفيذ الحقيقي محتاج" },
+  gapGives: [
+    { en: "Diagnosis of your current stage", ar: "تشخيص لمرحلتك الحالية" },
+    { en: "Your funnel split", ar: "توزيع القمع بتاعك" },
+    { en: "Content ideas", ar: "أفكار محتوى" },
+    { en: "A 30-day calendar", ar: "تقويم 30 يوم" },
+  ],
+  gapNeeds: [
+    { en: "Research", ar: "بحث" },
+    { en: "Content planning", ar: "تخطيط محتوى" },
+    { en: "Hook writing", ar: "كتابة هوكات" },
+    { en: "Scripting", ar: "كتابة سكريبت" },
+    { en: "Filming", ar: "تصوير" },
+    { en: "Editing", ar: "مونتاج" },
+    { en: "Consistency systems", ar: "أنظمة للانتظام" },
+    { en: "Optimization", ar: "تحسين مستمر" },
+  ],
+
+  // Course recommendation
+  courseTitle: { en: "Recommended For You", ar: "منصوح بيه ليك" },
+  courseWhy: { en: "Why this is your focus", ar: "ليه ده تركيزك" },
+  courseModules: { en: "Modules that help", ar: "موديولات هتساعدك" },
+  courseOutcomes: { en: "What you can expect", ar: "النتيجة اللي تتوقعها" },
+
+  // Free vs full
+  compareTitle: { en: "Free Report vs The HOMUS System", ar: "التقرير المجاني مقابل نظام HOMUS" },
+  compareFreeTitle: { en: "Free Strategy Report", ar: "التقرير المجاني" },
+  compareFullTitle: { en: "The HOMUS System", ar: "نظام HOMUS" },
+  compareFree: [
+    { en: "Funnel split", ar: "توزيع القمع" },
+    { en: "30-day calendar", ar: "تقويم 30 يوم" },
+    { en: "Content ideas", ar: "أفكار محتوى" },
+    { en: "Diagnosis", ar: "تشخيص" },
+  ],
+  compareFull: [
+    { en: "Research framework", ar: "إطار للبحث" },
+    { en: "Content framework", ar: "إطار للمحتوى" },
+    { en: "Hook framework", ar: "إطار للهوكات" },
+    { en: "Scripting framework", ar: "إطار للسكريبت" },
+    { en: "Filming framework", ar: "إطار للتصوير" },
+    { en: "Editing framework", ar: "إطار للمونتاج" },
+    { en: "Weekly implementation process", ar: "نظام تنفيذ أسبوعي" },
+    { en: "Community", ar: "كوميونيتي" },
+    { en: "Mentorship", ar: "متابعة ومنتورشيب" },
+  ],
+
+  // Success stories
+  storiesTitle: { en: "Real Results From HOMUS", ar: "نتايج حقيقية من HOMUS" },
+  storiesSubtitle: {
+    en: "A few of the businesses that built a real content system.",
+    ar: "كام بيزنس بنوا نظام محتوى حقيقي.",
+  },
+  storyProblem: { en: "Problem", ar: "المشكلة" },
+  storyResult: { en: "Result", ar: "النتيجة" },
+
+  // ROI estimator
+  roiTitle: { en: "What Better Content Could Be Worth", ar: "المحتوى الأحسن ممكن يساوي كام" },
+  roiSubtitle: {
+    en: "A conservative estimate based on your own numbers.",
+    ar: "تقدير متحفّظ على أساس أرقامك إنت.",
+  },
+  roiCustomerValue: { en: "Average customer value", ar: "متوسط قيمة العميل" },
+  roiMonthlyCustomers: { en: "Customers per month", ar: "عدد العملاء في الشهر" },
+  roiCurrentLabel: { en: "Current monthly revenue", ar: "الإيراد الشهري الحالي" },
+  roiUpsideLabel: { en: "Potential extra / month", ar: "الزيادة المحتملة / شهر" },
+  roiYearLabel: { en: "Extra per year", ar: "الزيادة في السنة" },
+  roiNote: {
+    en: "Estimate only — assumes a modest lift from more consistent, better-targeted content.",
+    ar: "تقدير تقريبي بس — بيفترض تحسّن بسيط من محتوى أكتر انتظامًا وأدق استهدافًا.",
+  },
+  currency: { en: "EGP", ar: "ج.م" },
+
+  // CTAs
+  ctaBookCall: { en: "Book a Strategy Call", ar: "احجز مكالمة استراتيجية" },
+  ctaVisitHomus: { en: "Visit HOMUS", ar: "زور HOMUS" },
+  ctaGetHelp: { en: "Get Help Building This System", ar: "خد مساعدة في بناء النظام ده" },
+  ctaWatchTraining: { en: "Watch Free Training", ar: "اتفرّج على تدريب مجاني" },
+
+  // Ask kinds
+  askKindPractical: { en: "Practical", ar: "عملي" },
+  askKindStrategic: { en: "Strategic", ar: "استراتيجي" },
+  askKindContent: { en: "Content", ar: "محتوى" },
 } as const;
 
 export function t(text: LocalizedText, lang: "en" | "ar"): string {

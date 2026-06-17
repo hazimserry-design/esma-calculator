@@ -35,7 +35,7 @@ export function SplitDonut({ split }: { split: EsmaSplit }) {
           cy="90"
           r={r}
           fill="none"
-          stroke="rgba(255,255,255,0.05)"
+          stroke="rgba(47,47,47,0.08)"
           strokeWidth="18"
         />
         {segments.map((seg) => {
@@ -63,8 +63,8 @@ export function SplitDonut({ split }: { split: EsmaSplit }) {
         })}
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="text-3xl font-extrabold text-white">ESMA</span>
-        <span className="text-[11px] font-medium uppercase tracking-widest text-white/40">
+        <span className="text-3xl font-extrabold text-night">HOMUS</span>
+        <span className="text-[11px] font-medium uppercase tracking-widest text-night/40">
           Split
         </span>
       </div>

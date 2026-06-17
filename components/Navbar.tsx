@@ -4,34 +4,31 @@ import { useLang } from "./LanguageProvider";
 import { UI } from "@/lib/content";
 
 export function Navbar() {
-  const { lang, toggle, tr } = useLang();
+  const { toggle, tr } = useLang();
 
   return (
     <header className="relative z-20 mx-auto flex w-full max-w-5xl items-center justify-between px-5 py-5 sm:px-8 sm:py-6">
       <div className="flex items-center gap-3">
-        <div className="relative flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-glow/90 to-emerald-600 shadow-glow">
-          <span className="text-sm font-extrabold tracking-tight text-ink-950">
-            E
+        <div className="relative flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-gold to-goldDark shadow-gold">
+          <span className="text-lg font-extrabold tracking-tight text-white">
+            H
           </span>
-          <span className="absolute -bottom-1 -right-1 h-3.5 w-3.5 rounded-full bg-gradient-to-br from-gold-soft to-gold-deep ring-2 ring-ink-950" />
         </div>
         <div className="leading-tight">
-          <p className="text-base font-bold tracking-tight text-white">
+          <p className="text-base font-extrabold tracking-tight text-night">
             {tr(UI.brand)}
           </p>
-          <p className="text-[11px] font-medium text-white/45">
-            {tr(UI.brandSub)}
-          </p>
+          <p className="text-[11px] font-medium text-stone">{tr(UI.brandSub)}</p>
         </div>
       </div>
 
       <button
         onClick={toggle}
         aria-label="Toggle language"
-        className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm font-semibold text-white/80 transition hover:border-emerald-glow/40 hover:text-white"
+        className="group inline-flex items-center gap-2 rounded-full border border-line bg-card px-4 py-2 text-sm font-semibold text-night/80 shadow-soft2 transition hover:border-gold/50 hover:text-night"
       >
         <svg
-          className="h-4 w-4 text-emerald-soft"
+          className="h-4 w-4 text-gold"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"

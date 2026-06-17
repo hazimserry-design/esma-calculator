@@ -50,38 +50,38 @@ export function FunnelCard({ funnel, percentage, delay }: FunnelCardProps) {
           >
             {funnel.code}
           </span>
-          <h3 className="mt-2.5 text-lg font-bold text-white">
+          <h3 className="mt-2.5 text-lg font-bold text-night">
             {tr(funnel.fullName)}
           </h3>
         </div>
         <div className="text-end">
-          <span className="text-5xl font-extrabold leading-none tracking-tight text-white tabular-nums">
+          <span className="text-5xl font-extrabold leading-none tracking-tight text-night tabular-nums">
             {percentage}
           </span>
           <span className={`text-2xl font-bold ${accent.text}`}>%</span>
         </div>
       </div>
 
-      <div className="mt-4 h-2 w-full overflow-hidden rounded-full bg-white/[0.06]">
+      <div className="mt-4 h-2 w-full overflow-hidden rounded-full bg-night/[0.06]">
         <div
           className={`h-full rounded-full bg-gradient-to-r ${accent.bar} transition-all duration-[1100ms] ease-out`}
           style={{ width: `${width}%` }}
         />
       </div>
 
-      <p className="mt-5 text-[15px] leading-relaxed text-white/65">
+      <p className="mt-5 text-[15px] leading-relaxed text-night/65">
         {tr(funnel.description)}
       </p>
 
       <div className="mt-5">
-        <p className="mb-3 text-[11px] font-semibold uppercase tracking-widest text-white/35">
+        <p className="mb-3 text-[11px] font-semibold uppercase tracking-widest text-night/35">
           {tr(UI.examplesLabel)}
         </p>
         <div className="flex flex-wrap gap-2">
           {funnel.examples.map((ex, i) => (
             <span
               key={i}
-              className="rounded-full border border-white/[0.07] bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-white/70"
+              className="rounded-full border border-night/[0.07] bg-night/[0.03] px-3 py-1.5 text-xs font-medium text-night/70"
             >
               {tr(ex)}
             </span>

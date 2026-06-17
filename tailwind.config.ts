@@ -8,20 +8,25 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ink: {
-          950: "#05080a",
-          900: "#0a0f12",
-          800: "#0f161a",
-          700: "#16211f",
-        },
-        emerald: {
-          glow: "#10b981",
-          soft: "#34d399",
-        },
+        // HOMUS palette
+        cream: "#FAF7F0",
+        card: "#FFFFFF",
+        night: "#2F2F2F",
+        stone: "#6F6A60",
+        line: "#E8E0D2",
         gold: {
-          DEFAULT: "#e8c074",
-          soft: "#f4d99a",
-          deep: "#c9a14a",
+          DEFAULT: "#E3AA2F",
+          soft: "#E8C89A",
+          deep: "#C98F1E",
+        },
+        goldDark: "#C98F1E",
+        beige: "#E8C89A",
+        // dark-section greys (premium contrast panels)
+        ink: {
+          950: "#262626",
+          900: "#2F2F2F",
+          800: "#3A3A3A",
+          700: "#454545",
         },
       },
       fontFamily: {
@@ -32,9 +37,10 @@ const config: Config = {
         "4xl": "2rem",
       },
       boxShadow: {
-        glow: "0 0 0 1px rgba(16,185,129,0.15), 0 20px 60px -20px rgba(16,185,129,0.35)",
-        gold: "0 0 0 1px rgba(232,192,116,0.2), 0 20px 60px -25px rgba(232,192,116,0.35)",
-        card: "0 30px 80px -40px rgba(0,0,0,0.8)",
+        soft: "0 1px 2px rgba(47,47,47,0.04), 0 14px 36px -16px rgba(47,47,47,0.16)",
+        card: "0 1px 2px rgba(47,47,47,0.04), 0 18px 44px -20px rgba(47,47,47,0.18)",
+        gold: "0 10px 30px -10px rgba(227,170,47,0.45)",
+        soft2: "0 2px 8px rgba(47,47,47,0.06)",
       },
       keyframes: {
         "fade-up": {

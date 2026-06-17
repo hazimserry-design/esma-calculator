@@ -37,6 +37,21 @@ export interface Question {
 /** Answer values: choice index (0-4) or slider value (1-10). */
 export type Answers = Partial<Record<QuestionKey, number>>;
 
+/** Supported business / industry types (optional, not scored). */
+export type IndustryId =
+  | "consultant"
+  | "agency"
+  | "ecommerce"
+  | "restaurant"
+  | "gym"
+  | "realestate"
+  | "clinic"
+  | "course"
+  | "localservice"
+  | "other";
+
+export type FunnelStage = "tof" | "mof" | "bof";
+
 export interface Scores {
   businessAgeScore: number;
   onlineAgeScore: number;
@@ -52,4 +67,24 @@ export interface EsmaSplit {
   tof: number;
   mof: number;
   bof: number;
+}
+
+/** How confident the user feels about executing the plan consistently. */
+export type ExecutionConfidence = "very" | "somewhat" | "not";
+
+/** Inferred read of the user's business from their one-line description. */
+export interface BusinessProfile {
+  /** B2B vs B2C */
+  audience: "businesses" | "consumers" | "mixed";
+  /** local storefront / area vs online reach */
+  reach: "local" | "online" | "mixed";
+  /** selling a service vs a physical product */
+  offerType: "service" | "product" | "mixed";
+  /** premium / mid / mass-market positioning */
+  market: "premium" | "mid" | "mass";
+  awarenessLevel: "low" | "medium" | "high";
+  trustRequirement: "low" | "medium" | "high";
+  purchaseComplexity: "low" | "medium" | "high";
+  /** matched keywords from the description (for debugging / flavor) */
+  keywords: string[];
 }

@@ -3,14 +3,42 @@
 import { useState } from "react";
 import { useLang } from "./LanguageProvider";
 import { FUNNELS, UI } from "@/lib/content";
-import type { EsmaSplit } from "@/lib/types";
+import type {
+  EsmaSplit,
+  ExecutionConfidence,
+  IndustryId,
+  Scores,
+} from "@/lib/types";
 import { buildShareText } from "@/lib/share";
+import { generatePdf } from "@/lib/pdf";
+import { saveLead } from "@/lib/leads";
 import { SplitDonut } from "./SplitDonut";
 import { FunnelCard } from "./FunnelCard";
 import { WeeklyPlanner } from "./WeeklyPlanner";
+import { HealthScore } from "./HealthScore";
+import { BottleneckAnalysis } from "./BottleneckAnalysis";
+import { ContentOpportunity } from "./ContentOpportunity";
+import { WhySplit } from "./WhySplit";
+import { ContentIdeas } from "./ContentIdeas";
+import { ContentCalendar } from "./ContentCalendar";
+import { StrategyPack } from "./StrategyPack";
+import { BenchmarkComparison } from "./BenchmarkComparison";
+import { RoiEstimator } from "./RoiEstimator";
+import { AskHomus } from "./AskHomus";
+import { CourseRecommendation } from "./CourseRecommendation";
+import { ExecutionGap } from "./ExecutionGap";
+import { FreeVsFull } from "./FreeVsFull";
+import { SuccessStories } from "./SuccessStories";
+import { ConfidenceMessage } from "./ConfidenceMessage";
+import { CTASection } from "./CTASection";
+import { LeadCaptureModal, type LeadFields } from "./LeadCaptureModal";
 
 interface ResultsProps {
   split: EsmaSplit;
+  scores: Scores;
+  industryId: IndustryId | undefined;
+  businessDescription: string;
+  confidence: ExecutionConfidence | undefined;
   perWeek: number;
   onPerWeekChange: (n: number) => void;
   onStartOver: () => void;
@@ -24,6 +52,10 @@ const LEGEND = [
 
 export function Results({
   split,
+  scores,
+  industryId,
+  businessDescription,
+  confidence,
   perWeek,
   onPerWeekChange,
   onStartOver,
@@ -31,13 +63,12 @@ export function Results({
   const { lang, tr } = useLang();
   const [copied, setCopied] = useState(false);
   const [pdfBusy, setPdfBusy] = useState(false);
+  const [leadOpen, setLeadOpen] = useState(false);
 
   const handleCopy = async () => {
     const text = buildShareText(split, perWeek, lang);
     try {
       await navigator.clipboard.writeText(text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
     } catch {
       const ta = document.createElement("textarea");
       ta.value = text;
@@ -45,129 +76,31 @@ export function Results({
       ta.select();
       document.execCommand("copy");
       document.body.removeChild(ta);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
     }
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleDownloadPdf = async () => {
+  const handleDownload = async (lead: LeadFields | null) => {
     setPdfBusy(true);
-
     try {
-      const { jsPDF } = await import("jspdf");
-
-      const pdf = new jsPDF({
-        orientation: "portrait",
-        unit: "pt",
-        format: "a4",
-      });
-
-      const pageWidth = pdf.internal.pageSize.getWidth();
-      const pageHeight = pdf.internal.pageSize.getHeight();
-
-      pdf.setFillColor(5, 8, 10);
-      pdf.rect(0, 0, pageWidth, pageHeight, "F");
-
-      pdf.setTextColor(255, 255, 255);
-      pdf.setFontSize(28);
-      pdf.text("Your ESMA Content Split", pageWidth / 2, 80, {
-        align: "center",
-      });
-
-      pdf.setFontSize(13);
-      pdf.setTextColor(170, 170, 170);
-      pdf.text("Your recommended content distribution", pageWidth / 2, 110, {
-        align: "center",
-      });
-
-      const rows: {
-        label: string;
-        code: string;
-        value: number;
-        color: [number, number, number];
-      }[] = [
-        {
-          label: "Top of Funnel",
-          code: "TOF",
-          value: split.tof,
-          color: [34, 197, 94],
-        },
-        {
-          label: "Middle of Funnel",
-          code: "MOF",
-          value: split.mof,
-          color: [59, 130, 246],
-        },
-        {
-          label: "Bottom of Funnel",
-          code: "BOF",
-          value: split.bof,
-          color: [249, 115, 22],
-        },
-      ];
-
-      let y = 175;
-
-      rows.forEach((row) => {
-        pdf.setFillColor(15, 25, 22);
-        pdf.roundedRect(60, y - 35, pageWidth - 120, 105, 16, 16, "F");
-
-        pdf.setTextColor(row.color[0], row.color[1], row.color[2]);
-        pdf.setFontSize(12);
-        pdf.text(row.code, 85, y - 5);
-
-        pdf.setTextColor(255, 255, 255);
-        pdf.setFontSize(18);
-        pdf.text(row.label, 85, y + 22);
-
-        pdf.setFontSize(34);
-        pdf.text(`${row.value}%`, pageWidth - 85, y + 14, {
-          align: "right",
+      if (lead && (lead.name || lead.email || lead.whatsapp)) {
+        saveLead({
+          ...lead,
+          industryId,
+          split,
+          createdAt: new Date().toISOString(),
         });
-
-        pdf.setFillColor(35, 45, 42);
-        pdf.roundedRect(85, y + 42, pageWidth - 170, 9, 4, 4, "F");
-
-        pdf.setFillColor(row.color[0], row.color[1], row.color[2]);
-        pdf.roundedRect(
-          85,
-          y + 42,
-          ((pageWidth - 170) * row.value) / 100,
-          9,
-          4,
-          4,
-          "F"
-        );
-
-        y += 130;
+      }
+      await generatePdf({
+        split,
+        perWeek,
+        industryId,
+        scores,
+        businessDescription,
+        lang,
       });
-
-      const tofVideos = Math.round((split.tof / 100) * perWeek);
-      const mofVideos = Math.round((split.mof / 100) * perWeek);
-      const bofVideos = Math.max(0, perWeek - tofVideos - mofVideos);
-
-      pdf.setFillColor(15, 25, 22);
-      pdf.roundedRect(60, y - 20, pageWidth - 120, 130, 16, 16, "F");
-
-      pdf.setTextColor(255, 255, 255);
-      pdf.setFontSize(20);
-      pdf.text(`Weekly Plan: ${perWeek} videos per week`, pageWidth / 2, y + 15, {
-        align: "center",
-      });
-
-      pdf.setFontSize(14);
-      pdf.setTextColor(190, 190, 190);
-      pdf.text(`TOF: ${tofVideos} videos`, pageWidth / 2, y + 50, {
-        align: "center",
-      });
-      pdf.text(`MOF: ${mofVideos} videos`, pageWidth / 2, y + 75, {
-        align: "center",
-      });
-      pdf.text(`BOF: ${bofVideos} videos`, pageWidth / 2, y + 100, {
-        align: "center",
-      });
-
-      pdf.save("esma-content-split.pdf");
+      setLeadOpen(false);
     } catch (error) {
       console.error("PDF export failed", error);
       alert("PDF download failed. Please try again.");
@@ -178,90 +111,122 @@ export function Results({
 
   return (
     <section className="relative z-10 mx-auto w-full max-w-3xl px-5 pb-20 sm:px-8">
-      <div className="rounded-[2rem]">
-        <div className="animate-fade-up text-center">
-          <h1 className="text-3xl font-extrabold tracking-tight text-white sm:text-5xl">
-            {tr(UI.resultsTitle)}
-          </h1>
-          <p className="mx-auto mt-4 max-w-lg text-pretty text-sm leading-relaxed text-white/55 sm:text-base">
-            {tr(UI.resultsSubtitle)}
-          </p>
-        </div>
-
-        <div
-          className="animate-scale-in mt-10"
-          style={{ animationDelay: "100ms" }}
-        >
-          <SplitDonut split={split} />
-        </div>
-
-        <div className="animate-fade-up mt-6 flex flex-wrap items-center justify-center gap-5">
-          {LEGEND.map((l) => (
-            <div key={l.key} className="flex items-center gap-2">
-              <span
-                className="h-3 w-3 rounded-full"
-                style={{ backgroundColor: l.color }}
-              />
-              <span className="text-sm font-semibold text-white/80">
-                {l.code}
-              </span>
-              <span className="text-sm font-bold text-white tabular-nums">
-                {split[l.key]}%
-              </span>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-10 flex flex-col gap-4">
-          {FUNNELS.map((f, i) => (
-            <FunnelCard
-              key={f.code}
-              funnel={f}
-              percentage={split[f.code.toLowerCase() as "tof" | "mof" | "bof"]}
-              delay={150 + i * 100}
-            />
-          ))}
-        </div>
-
-        <div
-          className="animate-fade-up mt-5"
-          style={{ animationDelay: "450ms" }}
-        >
-          <WeeklyPlanner
-            split={split}
-            perWeek={perWeek}
-            onPerWeekChange={onPerWeekChange}
-          />
-        </div>
+      {/* Header + donut */}
+      <div className="animate-fade-up text-center">
+        <h1 className="text-3xl font-extrabold tracking-tight text-night sm:text-5xl">
+          {tr(UI.resultsTitle)}
+        </h1>
+        <p className="mx-auto mt-4 max-w-lg text-pretty text-sm leading-relaxed text-stone sm:text-base">
+          {tr(UI.resultsSubtitle)}
+        </p>
       </div>
 
+      <div className="animate-scale-in mt-10" style={{ animationDelay: "100ms" }}>
+        <SplitDonut split={split} />
+      </div>
+
+      <div className="animate-fade-up mt-6 flex flex-wrap items-center justify-center gap-5">
+        {LEGEND.map((l) => (
+          <div key={l.key} className="flex items-center gap-2">
+            <span
+              className="h-3 w-3 rounded-full"
+              style={{ backgroundColor: l.color }}
+            />
+            <span className="text-sm font-semibold text-night/80">{l.code}</span>
+            <span className="text-sm font-bold text-night tabular-nums">
+              {split[l.key]}%
+            </span>
+          </div>
+        ))}
+      </div>
+
+      {/* Funnel breakdown */}
+      <div className="mt-10 flex flex-col gap-4">
+        {FUNNELS.map((f, i) => (
+          <FunnelCard
+            key={f.code}
+            funnel={f}
+            percentage={split[f.code.toLowerCase() as "tof" | "mof" | "bof"]}
+            delay={150 + i * 100}
+          />
+        ))}
+      </div>
+
+      {/* Strategy sections */}
+      <div className="mt-5 flex flex-col gap-5">
+        <HealthScore scores={scores} split={split} />
+        <BottleneckAnalysis split={split} />
+        <ContentOpportunity
+          split={split}
+          scores={scores}
+          industryId={industryId}
+          businessDescription={businessDescription}
+        />
+        <WhySplit split={split} />
+        <WeeklyPlanner
+          split={split}
+          perWeek={perWeek}
+          onPerWeekChange={onPerWeekChange}
+        />
+        <ContentIdeas industryId={industryId} />
+        <ContentCalendar split={split} industryId={industryId} />
+        <StrategyPack
+          split={split}
+          scores={scores}
+          industryId={industryId}
+          businessDescription={businessDescription}
+        />
+        <BenchmarkComparison split={split} />
+        <RoiEstimator />
+        <AskHomus
+          split={split}
+          scores={scores}
+          perWeek={perWeek}
+          industryId={industryId}
+          businessDescription={businessDescription}
+        />
+
+        {/* Conversion zone */}
+        <CourseRecommendation split={split} />
+        <ExecutionGap />
+        <FreeVsFull />
+        <SuccessStories />
+        {confidence === "not" && <ConfidenceMessage />}
+        <CTASection />
+      </div>
+
+      {/* Actions */}
       <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:justify-center">
         <button
           onClick={onStartOver}
-          className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-6 py-3.5 text-sm font-semibold text-white/75 transition hover:border-white/25 hover:text-white"
+          className="inline-flex items-center justify-center gap-2 rounded-full border border-line bg-card px-6 py-3.5 text-sm font-semibold text-night/75 shadow-soft2 transition hover:border-gold/40 hover:text-night"
         >
           {tr(UI.startOver)}
         </button>
 
         <button
           onClick={handleCopy}
-          className="inline-flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-6 py-3.5 text-sm font-semibold text-white/75 transition hover:border-emerald-glow/40 hover:text-white"
+          className="inline-flex items-center justify-center gap-2 rounded-full border border-line bg-card px-6 py-3.5 text-sm font-semibold text-night/75 shadow-soft2 transition hover:border-gold/40 hover:text-night"
         >
           {copied ? tr(UI.copied) : tr(UI.copyResults)}
         </button>
 
         <button
-          onClick={handleDownloadPdf}
-          disabled={pdfBusy}
-          className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-orange-500 to-orange-400 px-6 py-3.5 text-sm font-bold text-ink-950 shadow-gold transition hover:scale-[1.03] disabled:opacity-60"
+          onClick={() => setLeadOpen(true)}
+          className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-gold to-goldDark px-6 py-3.5 text-sm font-bold text-white shadow-gold transition hover:scale-[1.03]"
         >
-          {pdfBusy ? tr(UI.preparing) : tr(UI.downloadPdf)}
+          {tr(UI.downloadReport)}
         </button>
       </div>
 
-      <p className="mt-8 text-center text-xs text-white/30">
-        {tr(UI.footer)}
-      </p>
+      <p className="mt-8 text-center text-xs text-stone">{tr(UI.footer)}</p>
+
+      <LeadCaptureModal
+        open={leadOpen}
+        busy={pdfBusy}
+        onDownload={handleDownload}
+        onClose={() => setLeadOpen(false)}
+      />
     </section>
   );
 }

@@ -16,13 +16,13 @@ const cairo = Cairo({
 });
 
 export const metadata: Metadata = {
-  title: "ESMA Content Split Calculator",
+  title: "HOMUS — AI Content Strategy Engine",
   description:
-    "Discover your ideal ESMA content distribution across awareness, trust, and conversion.",
+    "Get a personalized content strategy: your funnel split, a 30-day calendar, ready-to-post ideas, and your biggest growth opportunity. By HOMUS.",
 };
 
 export const viewport: Viewport = {
-  themeColor: "#05080a",
+  themeColor: "#FAF7F0",
   width: "device-width",
   initialScale: 1,
 };
