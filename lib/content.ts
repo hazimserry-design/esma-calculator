@@ -409,6 +409,67 @@ export const UI = {
     { en: "I help people lose weight.", ar: "بساعد الناس تخس." },
   ],
 
+  // Content brief step (feeds the AI content strategy)
+  briefTitle: {
+    en: "Tell us about your business.",
+    ar: "قولّنا عن البيزنس بتاعك.",
+  },
+  briefSubtitle: {
+    en: "We'll turn this into a custom content plan for Instagram & TikTok.",
+    ar: "هنحوّل ده لخطة محتوى مخصّصة لإنستجرام وتيك توك.",
+  },
+  briefSellLabel: { en: "What you sell", ar: "بتبيع إيه" },
+  briefSellPlaceholder: {
+    en: "e.g. handmade scented candles",
+    ar: "مثال: شمع معطّر هاند ميد",
+  },
+  briefAudienceLabel: { en: "Who you sell to", ar: "بتبيع لمين" },
+  briefAudiencePlaceholder: {
+    en: "e.g. women who love cozy homes",
+    ar: "مثال: ستات بتحب جو البيت الدافي",
+  },
+  briefProblemLabel: { en: "The problem you solve", ar: "المشكلة اللي بتحلّها" },
+  briefProblemPlaceholder: {
+    en: "e.g. their home feels boring",
+    ar: "مثال: بيتهم حاسينه ممل",
+  },
+  briefPriceLabel: {
+    en: "Your price vs the market",
+    ar: "سعرك مقارنة بالسوق",
+  },
+  briefPriceOptions: [
+    { en: "Low", ar: "رخيص" },
+    { en: "Mid", ar: "متوسط" },
+    { en: "High", ar: "غالي" },
+  ],
+  briefLocationLabel: {
+    en: "Location (optional)",
+    ar: "المكان (اختياري)",
+  },
+  briefLocationPlaceholder: { en: "e.g. Cairo", ar: "مثال: القاهرة" },
+
+  // AI content strategy section (on results)
+  aiStrategyTitle: {
+    en: "Your AI Content Strategy",
+    ar: "استراتيجية المحتوى بالذكاء الاصطناعي",
+  },
+  aiStrategySubtitle: {
+    en: "Specific subtopics, real search phrases, and video ideas — built for your business.",
+    ar: "مواضيع فرعية محددة، كلمات بحث حقيقية، وأفكار فيديوهات — معمولة للبيزنس بتاعك.",
+  },
+  aiStrategyLoading: {
+    en: "Generating your content strategy…",
+    ar: "بنجهّز استراتيجية المحتوى بتاعتك…",
+  },
+  aiStrategyError: {
+    en: "Couldn't generate the strategy right now. Tap to retry.",
+    ar: "مش قادرين نجهّز الاستراتيجية دلوقتي. اضغط للمحاولة تاني.",
+  },
+  aiStrategyRetry: { en: "Retry", ar: "حاول تاني" },
+  aiSearchPhrasesLabel: { en: "Search these", ar: "ابحث عن دول" },
+  aiVideoIdeasLabel: { en: "Video ideas", ar: "أفكار فيديوهات" },
+  aiStrategyCopy: { en: "Copy strategy", ar: "انسخ الاستراتيجية" },
+
   // Execution confidence question
   confidenceQuestion: {
     en: "How confident are you that you can execute this plan consistently?",

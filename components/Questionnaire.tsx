@@ -4,7 +4,14 @@ import { useState } from "react";
 import { useLang } from "./LanguageProvider";
 import { QUESTIONS, UI } from "@/lib/content";
 import { INDUSTRIES } from "@/lib/industries";
-import type { Answers, ExecutionConfidence, IndustryId } from "@/lib/types";
+import { briefIsReady } from "@/lib/aiClient";
+import type {
+  Answers,
+  ContentBrief,
+  ExecutionConfidence,
+  IndustryId,
+  PriceLevel,
+} from "@/lib/types";
 import { ChoiceOption } from "./ChoiceOption";
 import { SliderInput } from "./SliderInput";
 
@@ -13,8 +20,8 @@ interface QuestionnaireProps {
   setAnswers: (a: Answers) => void;
   industry: IndustryId | undefined;
   setIndustry: (id: IndustryId) => void;
-  businessDescription: string;
-  setBusinessDescription: (s: string) => void;
+  brief: ContentBrief;
+  setBrief: (b: ContentBrief) => void;
   confidence: ExecutionConfidence | undefined;
   setConfidence: (c: ExecutionConfidence) => void;
   onComplete: () => void;
@@ -22,14 +29,43 @@ interface QuestionnaireProps {
 }
 
 const CONF_VALUES: ExecutionConfidence[] = ["very", "somewhat", "not"];
+const PRICE_VALUES: PriceLevel[] = ["low", "mid", "high"];
+
+function BriefField({
+  label,
+  placeholder,
+  value,
+  onChange,
+}: {
+  label: string;
+  placeholder: string;
+  value: string;
+  onChange: (v: string) => void;
+}) {
+  return (
+    <div>
+      <label className="mb-2 block text-[13px] font-semibold text-night/80">
+        {label}
+      </label>
+      <input
+        type="text"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        maxLength={120}
+        className="w-full rounded-2xl border border-line bg-cream px-4 py-3.5 text-[15px] text-night placeholder:text-stone/50 outline-none transition focus:border-gold/60 focus:bg-card"
+      />
+    </div>
+  );
+}
 
 export function Questionnaire({
   answers,
   setAnswers,
   industry,
   setIndustry,
-  businessDescription,
-  setBusinessDescription,
+  brief,
+  setBrief,
   confidence,
   setConfidence,
   onComplete,
@@ -51,9 +87,11 @@ export function Questionnaire({
   const current = q ? answers[q.key] : undefined;
   const isAnswered = isConfidenceStep
     ? confidence !== undefined
-    : isScoredStep
-      ? current !== undefined && current !== null
-      : true; // industry + biz optional
+    : isBizStep
+      ? briefIsReady(brief) // require sell + audience + problem
+      : isScoredStep
+        ? current !== undefined && current !== null
+        : true; // industry optional
 
   const select = (value: number) => {
     if (!q) return;
@@ -83,7 +121,7 @@ export function Questionnaire({
 
   const sliderValue =
     q && q.type === "slider" ? (answers[q.key] ?? q.slider!.min) : 0;
-  const canSkip = isIndustryStep || isBizStep;
+  const canSkip = isIndustryStep;
 
   return (
     <section className="relative z-10 mx-auto flex min-h-[70vh] w-full max-w-2xl flex-col px-5 pb-16 pt-2 sm:px-8">
@@ -143,30 +181,62 @@ export function Questionnaire({
         {isBizStep && (
           <>
             <h2 className="text-2xl font-bold leading-snug tracking-tight text-night sm:text-3xl">
-              {tr(UI.bizDescTitle)}
+              {tr(UI.briefTitle)}
             </h2>
-            <p className="mt-2 text-sm text-stone">{tr(UI.bizDescOptional)}</p>
-            <textarea
-              value={businessDescription}
-              onChange={(e) => setBusinessDescription(e.target.value)}
-              placeholder={tr(UI.bizDescPlaceholder)}
-              rows={3}
-              maxLength={160}
-              className="mt-6 w-full resize-none rounded-2xl border border-line bg-cream px-4 py-3.5 text-[15px] text-night placeholder:text-stone/50 outline-none transition focus:border-gold/60 focus:bg-card"
-            />
-            <p className="mt-5 mb-2 text-[11px] font-semibold uppercase tracking-widest text-stone/60">
-              {tr(UI.bizDescExamplesLabel)}
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {UI.bizDescExamples.map((ex, i) => (
-                <button
-                  key={i}
-                  onClick={() => setBusinessDescription(tr(ex))}
-                  className="rounded-full border border-line bg-card px-3 py-1.5 text-xs font-medium text-stone transition hover:border-gold/50 hover:text-night"
-                >
-                  {tr(ex)}
-                </button>
-              ))}
+            <p className="mt-2 text-sm text-stone">{tr(UI.briefSubtitle)}</p>
+
+            <div className="mt-6 flex flex-col gap-4">
+              <BriefField
+                label={tr(UI.briefSellLabel)}
+                placeholder={tr(UI.briefSellPlaceholder)}
+                value={brief.sell}
+                onChange={(v) => setBrief({ ...brief, sell: v })}
+              />
+              <BriefField
+                label={tr(UI.briefAudienceLabel)}
+                placeholder={tr(UI.briefAudiencePlaceholder)}
+                value={brief.audience}
+                onChange={(v) => setBrief({ ...brief, audience: v })}
+              />
+              <BriefField
+                label={tr(UI.briefProblemLabel)}
+                placeholder={tr(UI.briefProblemPlaceholder)}
+                value={brief.problem}
+                onChange={(v) => setBrief({ ...brief, problem: v })}
+              />
+
+              <div>
+                <p className="mb-2 text-[13px] font-semibold text-night/80">
+                  {tr(UI.briefPriceLabel)}
+                </p>
+                <div className="grid grid-cols-3 gap-2.5">
+                  {UI.briefPriceOptions.map((opt, i) => {
+                    const active = brief.price === PRICE_VALUES[i];
+                    return (
+                      <button
+                        key={i}
+                        onClick={() =>
+                          setBrief({ ...brief, price: PRICE_VALUES[i] })
+                        }
+                        className={`rounded-2xl border px-4 py-3 text-[14px] font-semibold transition-all ${
+                          active
+                            ? "border-gold/60 bg-gold/[0.08] text-night shadow-soft"
+                            : "border-line bg-cream text-night/70 hover:border-gold/40 hover:bg-gold/[0.04]"
+                        }`}
+                      >
+                        {tr(opt)}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <BriefField
+                label={tr(UI.briefLocationLabel)}
+                placeholder={tr(UI.briefLocationPlaceholder)}
+                value={brief.location}
+                onChange={(v) => setBrief({ ...brief, location: v })}
+              />
             </div>
           </>
         )}

@@ -6,7 +6,13 @@ import { Landing } from "@/components/Landing";
 import { Questionnaire } from "@/components/Questionnaire";
 import { Results } from "@/components/Results";
 import { buildScores, calculateSplit } from "@/lib/engine";
-import type { Answers, ExecutionConfidence, IndustryId } from "@/lib/types";
+import {
+  EMPTY_BRIEF,
+  type Answers,
+  type ContentBrief,
+  type ExecutionConfidence,
+  type IndustryId,
+} from "@/lib/types";
 
 type Stage = "landing" | "quiz" | "results";
 
@@ -17,15 +23,25 @@ interface PersistedState {
   answers: Answers;
   perWeek: number;
   industry?: IndustryId;
-  businessDescription?: string;
+  brief?: ContentBrief;
   confidence?: ExecutionConfidence;
+}
+
+/** Join the structured brief into one line for the local engine + PDF. */
+function briefToDescription(b: ContentBrief): string {
+  const parts: string[] = [];
+  if (b.sell.trim()) parts.push(b.sell.trim());
+  if (b.audience.trim()) parts.push(`for ${b.audience.trim()}`);
+  if (b.problem.trim()) parts.push(b.problem.trim());
+  if (b.location.trim()) parts.push(b.location.trim());
+  return parts.join(". ");
 }
 
 export default function Page() {
   const [stage, setStage] = useState<Stage>("landing");
   const [answers, setAnswers] = useState<Answers>({});
   const [industry, setIndustry] = useState<IndustryId | undefined>(undefined);
-  const [businessDescription, setBusinessDescription] = useState("");
+  const [brief, setBrief] = useState<ContentBrief>(EMPTY_BRIEF);
   const [confidence, setConfidence] = useState<ExecutionConfidence | undefined>(
     undefined
   );
@@ -41,8 +57,7 @@ export default function Page() {
         if (parsed.answers) setAnswers(parsed.answers);
         if (parsed.perWeek) setPerWeek(parsed.perWeek);
         if (parsed.industry) setIndustry(parsed.industry);
-        if (parsed.businessDescription)
-          setBusinessDescription(parsed.businessDescription);
+        if (parsed.brief) setBrief({ ...EMPTY_BRIEF, ...parsed.brief });
         if (parsed.confidence) setConfidence(parsed.confidence);
         if (parsed.stage === "results") setStage("results");
       }
@@ -60,27 +75,20 @@ export default function Page() {
       answers,
       perWeek,
       industry,
-      businessDescription,
+      brief,
       confidence,
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  }, [
-    stage,
-    answers,
-    perWeek,
-    industry,
-    businessDescription,
-    confidence,
-    hydrated,
-  ]);
+  }, [stage, answers, perWeek, industry, brief, confidence, hydrated]);
 
   const scores = useMemo(() => buildScores(answers), [answers]);
   const split = useMemo(() => calculateSplit(scores), [scores]);
+  const businessDescription = useMemo(() => briefToDescription(brief), [brief]);
 
   const startOver = () => {
     setAnswers({});
     setIndustry(undefined);
-    setBusinessDescription("");
+    setBrief(EMPTY_BRIEF);
     setConfidence(undefined);
     setPerWeek(10);
     setStage("landing");
@@ -99,8 +107,8 @@ export default function Page() {
             setAnswers={setAnswers}
             industry={industry}
             setIndustry={setIndustry}
-            businessDescription={businessDescription}
-            setBusinessDescription={setBusinessDescription}
+            brief={brief}
+            setBrief={setBrief}
             confidence={confidence}
             setConfidence={setConfidence}
             onComplete={() => setStage("results")}
@@ -114,6 +122,7 @@ export default function Page() {
             scores={scores}
             industryId={industry}
             businessDescription={businessDescription}
+            brief={brief}
             confidence={confidence}
             perWeek={perWeek}
             onPerWeekChange={setPerWeek}

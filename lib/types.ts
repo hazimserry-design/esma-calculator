@@ -72,6 +72,48 @@ export interface EsmaSplit {
 /** How confident the user feels about executing the plan consistently. */
 export type ExecutionConfidence = "very" | "somewhat" | "not";
 
+/** Price positioning relative to the industry. */
+export type PriceLevel = "low" | "mid" | "high";
+
+/**
+ * Structured business brief collected in the funnel. Sent to the
+ * `content-strategy` edge function to generate an AI content plan, and also
+ * used (joined into one line) to feed the local strategy engine.
+ */
+export interface ContentBrief {
+  /** What I sell */
+  sell: string;
+  /** Who I sell to */
+  audience: string;
+  /** What problem I solve */
+  problem: string;
+  /** Price level vs industry */
+  price: PriceLevel | "";
+  /** Location (optional) */
+  location: string;
+}
+
+export const EMPTY_BRIEF: ContentBrief = {
+  sell: "",
+  audience: "",
+  problem: "",
+  price: "",
+  location: "",
+};
+
+/** One subtopic returned by the AI content strategist. */
+export interface StrategySubtopic {
+  name: string;
+  searchPhrases: string[];
+  videoIdeas: string[];
+}
+
+/** Full payload returned by the `content-strategy` edge function. */
+export interface ContentStrategyResult {
+  summary: string;
+  subtopics: StrategySubtopic[];
+}
+
 /** Inferred read of the user's business from their one-line description. */
 export interface BusinessProfile {
   /** B2B vs B2C */

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useLang } from "./LanguageProvider";
 import { FUNNELS, UI } from "@/lib/content";
 import type {
+  ContentBrief,
   EsmaSplit,
   ExecutionConfidence,
   IndustryId,
@@ -22,6 +23,7 @@ import { WhySplit } from "./WhySplit";
 import { ContentIdeas } from "./ContentIdeas";
 import { ContentCalendar } from "./ContentCalendar";
 import { StrategyPack } from "./StrategyPack";
+import { ContentStrategyAI } from "./ContentStrategyAI";
 import { BenchmarkComparison } from "./BenchmarkComparison";
 import { RoiEstimator } from "./RoiEstimator";
 import { AskHomus } from "./AskHomus";
@@ -38,6 +40,7 @@ interface ResultsProps {
   scores: Scores;
   industryId: IndustryId | undefined;
   businessDescription: string;
+  brief: ContentBrief;
   confidence: ExecutionConfidence | undefined;
   perWeek: number;
   onPerWeekChange: (n: number) => void;
@@ -55,6 +58,7 @@ export function Results({
   scores,
   industryId,
   businessDescription,
+  brief,
   confidence,
   perWeek,
   onPerWeekChange,
@@ -154,6 +158,7 @@ export function Results({
 
       {/* Strategy sections */}
       <div className="mt-5 flex flex-col gap-5">
+        <ContentStrategyAI brief={brief} />
         <HealthScore scores={scores} split={split} />
         <BottleneckAnalysis split={split} />
         <ContentOpportunity
