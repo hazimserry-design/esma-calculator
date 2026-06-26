@@ -3,24 +3,33 @@
 import { useCallback, useEffect, useState } from "react";
 import { useLang } from "./LanguageProvider";
 import { UI } from "@/lib/content";
+import { INDUSTRIES } from "@/lib/industries";
 import { fetchContentStrategy, briefIsReady } from "@/lib/aiClient";
-import type { ContentBrief, ContentStrategyResult } from "@/lib/types";
+import type { ContentBrief, ContentStrategyResult, IndustryId } from "@/lib/types";
 import { CopyButton } from "./CopyButton";
 
-export function ContentStrategyAI({ brief }: { brief: ContentBrief }) {
+export function ContentStrategyAI({
+  brief,
+  industryId,
+}: {
+  brief: ContentBrief;
+  industryId: IndustryId | undefined;
+}) {
   const { lang, tr } = useLang();
   const [data, setData] = useState<ContentStrategyResult | null>(null);
   const [status, setStatus] = useState<"loading" | "ready" | "error">(
     "loading"
   );
 
-  const ready = briefIsReady(brief);
+  const industry = INDUSTRIES.find((i) => i.id === industryId);
+  const businessType = industry ? tr(industry.label) : "";
+  const ready = briefIsReady(brief) && businessType.length > 0;
 
   const load = useCallback(
     (signal?: AbortSignal) => {
       if (!ready) return;
       setStatus("loading");
-      fetchContentStrategy(brief, lang, signal)
+      fetchContentStrategy(brief, businessType, lang, signal)
         .then((res) => {
           if (signal?.aborted) return;
           setData(res);
@@ -32,7 +41,7 @@ export function ContentStrategyAI({ brief }: { brief: ContentBrief }) {
           setStatus("error");
         });
     },
-    [brief, lang, ready]
+    [brief, businessType, lang, ready]
   );
 
   useEffect(() => {

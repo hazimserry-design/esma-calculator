@@ -87,11 +87,13 @@ export function Questionnaire({
   const current = q ? answers[q.key] : undefined;
   const isAnswered = isConfidenceStep
     ? confidence !== undefined
-    : isBizStep
-      ? briefIsReady(brief) // require sell + audience + problem
-      : isScoredStep
-        ? current !== undefined && current !== null
-        : true; // industry optional
+    : isIndustryStep
+      ? industry !== undefined // business type now required
+      : isBizStep
+        ? briefIsReady(brief) // require audience + problem
+        : isScoredStep
+          ? current !== undefined && current !== null
+          : true;
 
   const select = (value: number) => {
     if (!q) return;
@@ -121,7 +123,7 @@ export function Questionnaire({
 
   const sliderValue =
     q && q.type === "slider" ? (answers[q.key] ?? q.slider!.min) : 0;
-  const canSkip = isIndustryStep;
+  const canSkip = false;
 
   return (
     <section className="relative z-10 mx-auto flex min-h-[70vh] w-full max-w-2xl flex-col px-5 pb-16 pt-2 sm:px-8">
@@ -156,24 +158,35 @@ export function Questionnaire({
             <h2 className="text-2xl font-bold leading-snug tracking-tight text-night sm:text-3xl">
               {tr(UI.industryQuestion)}
             </h2>
-            <p className="mt-2 text-sm text-stone">{tr(UI.industryOptional)}</p>
-            <div className="mt-7 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
-              {INDUSTRIES.map((ind) => {
-                const active = industry === ind.id;
-                return (
-                  <button
-                    key={ind.id}
-                    onClick={() => setIndustry(ind.id)}
-                    className={`rounded-2xl border p-4 text-start text-[15px] font-medium transition-all ${
-                      active
-                        ? "border-gold/60 bg-gold/[0.08] text-night shadow-soft"
-                        : "border-line bg-cream text-night/75 hover:border-gold/40 hover:bg-gold/[0.04]"
-                    }`}
-                  >
+            <p className="mt-2 text-sm text-stone">{tr(UI.industryPick)}</p>
+            <div className="relative mt-7">
+              <select
+                value={industry ?? ""}
+                onChange={(e) => setIndustry(e.target.value as IndustryId)}
+                className={`w-full appearance-none rounded-2xl border bg-cream px-4 py-3.5 pe-11 text-[15px] outline-none transition focus:border-gold/60 focus:bg-card ${
+                  industry ? "border-gold/50 text-night" : "border-line text-stone/60"
+                }`}
+              >
+                <option value="" disabled>
+                  {tr(UI.industryPlaceholder)}
+                </option>
+                {INDUSTRIES.map((ind) => (
+                  <option key={ind.id} value={ind.id} className="text-night">
                     {tr(ind.label)}
-                  </button>
-                );
-              })}
+                  </option>
+                ))}
+              </select>
+              <svg
+                className="pointer-events-none absolute end-4 top-1/2 h-4 w-4 -translate-y-1/2 text-stone"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M6 9l6 6 6-6" />
+              </svg>
             </div>
           </>
         )}
@@ -186,12 +199,6 @@ export function Questionnaire({
             <p className="mt-2 text-sm text-stone">{tr(UI.briefSubtitle)}</p>
 
             <div className="mt-6 flex flex-col gap-4">
-              <BriefField
-                label={tr(UI.briefSellLabel)}
-                placeholder={tr(UI.briefSellPlaceholder)}
-                value={brief.sell}
-                onChange={(v) => setBrief({ ...brief, sell: v })}
-              />
               <BriefField
                 label={tr(UI.briefAudienceLabel)}
                 placeholder={tr(UI.briefAudiencePlaceholder)}

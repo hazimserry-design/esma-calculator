@@ -81,8 +81,6 @@ export type PriceLevel = "low" | "mid" | "high";
  * used (joined into one line) to feed the local strategy engine.
  */
 export interface ContentBrief {
-  /** What I sell */
-  sell: string;
   /** Who I sell to */
   audience: string;
   /** What problem I solve */
@@ -94,7 +92,6 @@ export interface ContentBrief {
 }
 
 export const EMPTY_BRIEF: ContentBrief = {
-  sell: "",
   audience: "",
   problem: "",
   price: "",

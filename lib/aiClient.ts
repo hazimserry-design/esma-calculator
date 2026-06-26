@@ -25,6 +25,7 @@ const ENDPOINT = `${SUPABASE_URL}/functions/v1/content-strategy`;
 
 export async function fetchContentStrategy(
   brief: ContentBrief,
+  businessType: string,
   lang: Lang,
   signal?: AbortSignal
 ): Promise<ContentStrategyResult> {
@@ -35,7 +36,9 @@ export async function fetchContentStrategy(
       apikey: SUPABASE_ANON_KEY,
       Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
     },
-    body: JSON.stringify({ ...brief, lang }),
+    // The edge function reads `sell` as "what I sell" — fed by the
+    // business-type dropdown.
+    body: JSON.stringify({ sell: businessType, ...brief, lang }),
     signal,
   });
 
@@ -58,9 +61,5 @@ export async function fetchContentStrategy(
 
 /** True when the brief has enough detail to generate a useful strategy. */
 export function briefIsReady(brief: ContentBrief): boolean {
-  return (
-    brief.sell.trim().length > 0 &&
-    brief.audience.trim().length > 0 &&
-    brief.problem.trim().length > 0
-  );
+  return brief.audience.trim().length > 0 && brief.problem.trim().length > 0;
 }

@@ -30,7 +30,6 @@ import { AskHomus } from "./AskHomus";
 import { CourseRecommendation } from "./CourseRecommendation";
 import { ExecutionGap } from "./ExecutionGap";
 import { FreeVsFull } from "./FreeVsFull";
-import { SuccessStories } from "./SuccessStories";
 import { ConfidenceMessage } from "./ConfidenceMessage";
 import { CTASection } from "./CTASection";
 import { LeadCaptureModal, type LeadFields } from "./LeadCaptureModal";
@@ -158,7 +157,7 @@ export function Results({
 
       {/* Strategy sections */}
       <div className="mt-5 flex flex-col gap-5">
-        <ContentStrategyAI brief={brief} />
+        <ContentStrategyAI brief={brief} industryId={industryId} />
         <HealthScore scores={scores} split={split} />
         <BottleneckAnalysis split={split} />
         <ContentOpportunity
@@ -195,7 +194,6 @@ export function Results({
         <CourseRecommendation split={split} />
         <ExecutionGap />
         <FreeVsFull />
-        <SuccessStories />
         {confidence === "not" && <ConfidenceMessage />}
         <CTASection />
       </div>

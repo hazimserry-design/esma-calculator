@@ -297,6 +297,14 @@ export const UI = {
     en: "Optional — this helps us personalize your ideas.",
     ar: "اختياري — بيساعدنا نخصّص الأفكار ليك.",
   },
+  industryPick: {
+    en: "Pick the one closest to your business.",
+    ar: "اختار الأقرب للبيزنس بتاعك.",
+  },
+  industryPlaceholder: {
+    en: "Select your business type…",
+    ar: "اختار نوع البيزنس…",
+  },
   skip: { en: "Skip", ar: "تخطّي" },
 
   // Content ideas
@@ -417,11 +425,6 @@ export const UI = {
   briefSubtitle: {
     en: "We'll turn this into a custom content plan for Instagram & TikTok.",
     ar: "هنحوّل ده لخطة محتوى مخصّصة لإنستجرام وتيك توك.",
-  },
-  briefSellLabel: { en: "What you sell", ar: "بتبيع إيه" },
-  briefSellPlaceholder: {
-    en: "e.g. handmade scented candles",
-    ar: "مثال: شمع معطّر هاند ميد",
   },
   briefAudienceLabel: { en: "Who you sell to", ar: "بتبيع لمين" },
   briefAudiencePlaceholder: {
@@ -566,15 +569,6 @@ export const UI = {
     { en: "Community", ar: "كوميونيتي" },
     { en: "Mentorship", ar: "متابعة ومنتورشيب" },
   ],
-
-  // Success stories
-  storiesTitle: { en: "Real Results From HOMUS", ar: "نتايج حقيقية من HOMUS" },
-  storiesSubtitle: {
-    en: "A few of the businesses that built a real content system.",
-    ar: "كام بيزنس بنوا نظام محتوى حقيقي.",
-  },
-  storyProblem: { en: "Problem", ar: "المشكلة" },
-  storyResult: { en: "Result", ar: "النتيجة" },
 
   // ROI estimator
   roiTitle: { en: "What Better Content Could Be Worth", ar: "المحتوى الأحسن ممكن يساوي كام" },

@@ -30,7 +30,6 @@ interface PersistedState {
 /** Join the structured brief into one line for the local engine + PDF. */
 function briefToDescription(b: ContentBrief): string {
   const parts: string[] = [];
-  if (b.sell.trim()) parts.push(b.sell.trim());
   if (b.audience.trim()) parts.push(`for ${b.audience.trim()}`);
   if (b.problem.trim()) parts.push(b.problem.trim());
   if (b.location.trim()) parts.push(b.location.trim());
