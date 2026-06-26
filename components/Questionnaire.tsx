@@ -8,7 +8,6 @@ import { briefIsReady } from "@/lib/aiClient";
 import type {
   Answers,
   ContentBrief,
-  ExecutionConfidence,
   IndustryId,
   PriceLevel,
 } from "@/lib/types";
@@ -22,13 +21,10 @@ interface QuestionnaireProps {
   setIndustry: (id: IndustryId) => void;
   brief: ContentBrief;
   setBrief: (b: ContentBrief) => void;
-  confidence: ExecutionConfidence | undefined;
-  setConfidence: (c: ExecutionConfidence) => void;
   onComplete: () => void;
   onExit: () => void;
 }
 
-const CONF_VALUES: ExecutionConfidence[] = ["very", "somewhat", "not"];
 const PRICE_VALUES: PriceLevel[] = ["low", "mid", "high"];
 
 function BriefField({
@@ -66,8 +62,6 @@ export function Questionnaire({
   setIndustry,
   brief,
   setBrief,
-  confidence,
-  setConfidence,
   onComplete,
   onExit,
 }: QuestionnaireProps) {
@@ -76,24 +70,21 @@ export function Questionnaire({
   const [dir, setDir] = useState<1 | -1>(1);
 
   const N = QUESTIONS.length;
-  const total = N + 3; // industry, business desc, scored..., confidence
+  const total = N + 2; // industry, business brief, scored...
   const isIndustryStep = step === 0;
   const isBizStep = step === 1;
-  const isConfidenceStep = step === total - 1;
-  const isScoredStep = !isIndustryStep && !isBizStep && !isConfidenceStep;
+  const isScoredStep = !isIndustryStep && !isBizStep;
   const q = isScoredStep ? QUESTIONS[step - 2] : null;
   const progress = ((step + 1) / total) * 100;
 
   const current = q ? answers[q.key] : undefined;
-  const isAnswered = isConfidenceStep
-    ? confidence !== undefined
-    : isIndustryStep
-      ? industry !== undefined // business type now required
-      : isBizStep
-        ? briefIsReady(brief) // require audience + problem
-        : isScoredStep
-          ? current !== undefined && current !== null
-          : true;
+  const isAnswered = isIndustryStep
+    ? industry !== undefined // business type now required
+    : isBizStep
+      ? briefIsReady(brief) // require audience + problem
+      : isScoredStep
+        ? current !== undefined && current !== null
+        : true;
 
   const select = (value: number) => {
     if (!q) return;
@@ -278,25 +269,6 @@ export function Questionnaire({
                   />
                 </div>
               )}
-            </div>
-          </>
-        )}
-
-        {isConfidenceStep && (
-          <>
-            <h2 className="text-2xl font-bold leading-snug tracking-tight text-night sm:text-3xl">
-              {tr(UI.confidenceQuestion)}
-            </h2>
-            <div className="mt-7 flex flex-col gap-3">
-              {UI.confidenceOptions.map((opt, i) => (
-                <ChoiceOption
-                  key={i}
-                  index={i}
-                  label={tr(opt)}
-                  selected={confidence === CONF_VALUES[i]}
-                  onSelect={() => setConfidence(CONF_VALUES[i])}
-                />
-              ))}
             </div>
           </>
         )}

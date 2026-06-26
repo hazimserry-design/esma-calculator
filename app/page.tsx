@@ -10,7 +10,6 @@ import {
   EMPTY_BRIEF,
   type Answers,
   type ContentBrief,
-  type ExecutionConfidence,
   type IndustryId,
 } from "@/lib/types";
 
@@ -24,7 +23,6 @@ interface PersistedState {
   perWeek: number;
   industry?: IndustryId;
   brief?: ContentBrief;
-  confidence?: ExecutionConfidence;
 }
 
 /** Join the structured brief into one line for the local engine + PDF. */
@@ -41,9 +39,6 @@ export default function Page() {
   const [answers, setAnswers] = useState<Answers>({});
   const [industry, setIndustry] = useState<IndustryId | undefined>(undefined);
   const [brief, setBrief] = useState<ContentBrief>(EMPTY_BRIEF);
-  const [confidence, setConfidence] = useState<ExecutionConfidence | undefined>(
-    undefined
-  );
   const [perWeek, setPerWeek] = useState(10);
   const [hydrated, setHydrated] = useState(false);
 
@@ -57,7 +52,6 @@ export default function Page() {
         if (parsed.perWeek) setPerWeek(parsed.perWeek);
         if (parsed.industry) setIndustry(parsed.industry);
         if (parsed.brief) setBrief({ ...EMPTY_BRIEF, ...parsed.brief });
-        if (parsed.confidence) setConfidence(parsed.confidence);
         if (parsed.stage === "results") setStage("results");
       }
     } catch {
@@ -75,10 +69,9 @@ export default function Page() {
       perWeek,
       industry,
       brief,
-      confidence,
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  }, [stage, answers, perWeek, industry, brief, confidence, hydrated]);
+  }, [stage, answers, perWeek, industry, brief, hydrated]);
 
   const scores = useMemo(() => buildScores(answers), [answers]);
   const split = useMemo(() => calculateSplit(scores), [scores]);
@@ -88,7 +81,6 @@ export default function Page() {
     setAnswers({});
     setIndustry(undefined);
     setBrief(EMPTY_BRIEF);
-    setConfidence(undefined);
     setPerWeek(10);
     setStage("landing");
     localStorage.removeItem(STORAGE_KEY);
@@ -108,8 +100,6 @@ export default function Page() {
             setIndustry={setIndustry}
             brief={brief}
             setBrief={setBrief}
-            confidence={confidence}
-            setConfidence={setConfidence}
             onComplete={() => setStage("results")}
             onExit={() => setStage("landing")}
           />
@@ -122,7 +112,6 @@ export default function Page() {
             industryId={industry}
             businessDescription={businessDescription}
             brief={brief}
-            confidence={confidence}
             perWeek={perWeek}
             onPerWeekChange={setPerWeek}
             onStartOver={startOver}

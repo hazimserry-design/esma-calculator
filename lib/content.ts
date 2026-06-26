@@ -473,25 +473,6 @@ export const UI = {
   aiVideoIdeasLabel: { en: "Video ideas", ar: "أفكار فيديوهات" },
   aiStrategyCopy: { en: "Copy strategy", ar: "انسخ الاستراتيجية" },
 
-  // Execution confidence question
-  confidenceQuestion: {
-    en: "How confident are you that you can execute this plan consistently?",
-    ar: "قد إيه واثق إنك تقدر تنفّذ الخطة دي بانتظام؟",
-  },
-  confidenceOptions: [
-    { en: "Very confident", ar: "واثق جدًا" },
-    { en: "Somewhat confident", ar: "واثق لحد ما" },
-    { en: "Not confident", ar: "مش واثق" },
-  ],
-  confidenceNotTitle: {
-    en: "Most businesses don't fail because they lack information.",
-    ar: "أغلب البيزنس مابيفشلش لأنه مش عارف.",
-  },
-  confidenceNotBody: {
-    en: "They fail because they lack systems. That is exactly why HOMUS exists.",
-    ar: "بيفشل لأنه مفيش عنده نظام. وده بالظبط سبب وجود HOMUS.",
-  },
-
   // Business summary (AI read)
   aiReadTitle: { en: "What we understand about your business", ar: "اللي فهمناه عن البيزنس بتاعك" },
 

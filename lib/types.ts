@@ -69,9 +69,6 @@ export interface EsmaSplit {
   bof: number;
 }
 
-/** How confident the user feels about executing the plan consistently. */
-export type ExecutionConfidence = "very" | "somewhat" | "not";
-
 /** Price positioning relative to the industry. */
 export type PriceLevel = "low" | "mid" | "high";
 

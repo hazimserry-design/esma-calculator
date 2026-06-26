@@ -3,13 +3,7 @@
 import { useState } from "react";
 import { useLang } from "./LanguageProvider";
 import { FUNNELS, UI } from "@/lib/content";
-import type {
-  ContentBrief,
-  EsmaSplit,
-  ExecutionConfidence,
-  IndustryId,
-  Scores,
-} from "@/lib/types";
+import type { ContentBrief, EsmaSplit, IndustryId, Scores } from "@/lib/types";
 import { buildShareText } from "@/lib/share";
 import { generatePdf } from "@/lib/pdf";
 import { saveLead } from "@/lib/leads";
@@ -30,7 +24,6 @@ import { AskHomus } from "./AskHomus";
 import { CourseRecommendation } from "./CourseRecommendation";
 import { ExecutionGap } from "./ExecutionGap";
 import { FreeVsFull } from "./FreeVsFull";
-import { ConfidenceMessage } from "./ConfidenceMessage";
 import { CTASection } from "./CTASection";
 import { LeadCaptureModal, type LeadFields } from "./LeadCaptureModal";
 
@@ -40,7 +33,6 @@ interface ResultsProps {
   industryId: IndustryId | undefined;
   businessDescription: string;
   brief: ContentBrief;
-  confidence: ExecutionConfidence | undefined;
   perWeek: number;
   onPerWeekChange: (n: number) => void;
   onStartOver: () => void;
@@ -58,7 +50,6 @@ export function Results({
   industryId,
   businessDescription,
   brief,
-  confidence,
   perWeek,
   onPerWeekChange,
   onStartOver,
@@ -194,7 +185,6 @@ export function Results({
         <CourseRecommendation split={split} />
         <ExecutionGap />
         <FreeVsFull />
-        {confidence === "not" && <ConfidenceMessage />}
         <CTASection />
       </div>
 
