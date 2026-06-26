@@ -13,6 +13,7 @@ import type {
 } from "@/lib/types";
 import { ChoiceOption } from "./ChoiceOption";
 import { SliderInput } from "./SliderInput";
+import { Dropdown } from "./Dropdown";
 
 interface QuestionnaireProps {
   answers: Answers;
@@ -150,34 +151,16 @@ export function Questionnaire({
               {tr(UI.industryQuestion)}
             </h2>
             <p className="mt-2 text-sm text-stone">{tr(UI.industryPick)}</p>
-            <div className="relative mt-7">
-              <select
+            <div className="mt-7">
+              <Dropdown
                 value={industry ?? ""}
-                onChange={(e) => setIndustry(e.target.value as IndustryId)}
-                className={`w-full appearance-none rounded-2xl border bg-cream px-4 py-3.5 pe-11 text-[15px] outline-none transition focus:border-gold/60 focus:bg-card ${
-                  industry ? "border-gold/50 text-night" : "border-line text-stone/60"
-                }`}
-              >
-                <option value="" disabled>
-                  {tr(UI.industryPlaceholder)}
-                </option>
-                {INDUSTRIES.map((ind) => (
-                  <option key={ind.id} value={ind.id} className="text-night">
-                    {tr(ind.label)}
-                  </option>
-                ))}
-              </select>
-              <svg
-                className="pointer-events-none absolute end-4 top-1/2 h-4 w-4 -translate-y-1/2 text-stone"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.4"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M6 9l6 6 6-6" />
-              </svg>
+                onChange={(v) => setIndustry(v as IndustryId)}
+                placeholder={tr(UI.industryPlaceholder)}
+                options={INDUSTRIES.map((ind) => ({
+                  value: ind.id,
+                  label: tr(ind.label),
+                }))}
+              />
             </div>
           </>
         )}
