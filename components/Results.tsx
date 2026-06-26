@@ -3,10 +3,11 @@
 import { useState } from "react";
 import { useLang } from "./LanguageProvider";
 import { FUNNELS, UI } from "@/lib/content";
+import { INDUSTRIES } from "@/lib/industries";
 import type { ContentBrief, EsmaSplit, IndustryId, Scores } from "@/lib/types";
 import { buildShareText } from "@/lib/share";
 import { generatePdf } from "@/lib/pdf";
-import { saveLead } from "@/lib/leads";
+import { saveLead, saveLeadRemote } from "@/lib/leads";
 import { SplitDonut } from "./SplitDonut";
 import { FunnelCard } from "./FunnelCard";
 import { WeeklyPlanner } from "./WeeklyPlanner";
@@ -84,6 +85,18 @@ export function Results({
           industryId,
           split,
           createdAt: new Date().toISOString(),
+        });
+        // Persist to Supabase too (fire-and-forget — never blocks the PDF).
+        const businessType = industryId
+          ? tr(INDUSTRIES.find((i) => i.id === industryId)?.label ?? { en: "", ar: "" })
+          : "";
+        void saveLeadRemote({
+          ...lead,
+          businessType,
+          industry: industryId,
+          brief,
+          split,
+          lang,
         });
       }
       await generatePdf({
