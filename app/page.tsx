@@ -5,6 +5,8 @@ import { Navbar } from "@/components/Navbar";
 import { Landing } from "@/components/Landing";
 import { Questionnaire } from "@/components/Questionnaire";
 import { Results } from "@/components/Results";
+import { AccessGate } from "@/components/AccessGate";
+import { CONFIG } from "@/lib/config";
 import { buildScores, calculateSplit } from "@/lib/engine";
 import {
   EMPTY_BRIEF,
@@ -85,6 +87,17 @@ export default function Page() {
     setStage("landing");
     localStorage.removeItem(STORAGE_KEY);
   };
+
+  if (CONFIG.accessLocked) {
+    return (
+      <div className="app-bg">
+        <Navbar />
+        <main className="relative">
+          <AccessGate />
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="app-bg">

@@ -21,4 +21,10 @@ export const CONFIG = {
 
   /** localStorage key where captured leads are stored. */
   leadsStorageKey: "homus:leads",
+
+  /**
+   * When true, the whole tool is locked behind a "request access" gate.
+   * Flip to false to reopen the funnel.
+   */
+  accessLocked: true,
 } as const;

@@ -36,6 +36,46 @@ export interface RemoteLead {
 }
 
 /**
+ * Persist an access request from the locked gate to Supabase (esma_leads).
+ * Resolves to true on success, false on failure (so the UI can show an error).
+ */
+export async function saveAccessRequest(req: {
+  name: string;
+  email: string;
+  whatsapp: string;
+  lang: Lang;
+}): Promise<boolean> {
+  // localStorage backup.
+  if (typeof window !== "undefined") {
+    try {
+      const key = `${CONFIG.leadsStorageKey}:access`;
+      const raw = localStorage.getItem(key);
+      const list = raw ? JSON.parse(raw) : [];
+      list.push({ ...req, createdAt: new Date().toISOString() });
+      localStorage.setItem(key, JSON.stringify(list));
+    } catch {
+      /* ignore */
+    }
+  }
+  try {
+    const res = await fetch(functionUrl("capture-lead"), {
+      method: "POST",
+      headers: SUPABASE_HEADERS,
+      body: JSON.stringify({
+        name: req.name,
+        email: req.email,
+        whatsapp: req.whatsapp,
+        lang: req.lang,
+        source: "access-request",
+      }),
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
+/**
  * Persist a captured lead to Supabase (esma_leads, via the capture-lead edge
  * function). Fire-and-forget — never throws, so it can't block the PDF download.
  */

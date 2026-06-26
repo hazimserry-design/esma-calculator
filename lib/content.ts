@@ -381,6 +381,31 @@ export const UI = {
     ar: "دوس على سؤال فوق عشان تشوف الإجابة.",
   },
 
+  // Access gate (locked tool)
+  gateBadge: { en: "Invite only", ar: "بالدعوة فقط" },
+  gateTitle: {
+    en: "HOMUS is currently invite-only",
+    ar: "HOMUS دلوقتي بالدعوة فقط",
+  },
+  gateBody: {
+    en: "Leave your details and our team will reach out to talk about getting you access.",
+    ar: "سيب بياناتك وفريقنا هيتواصل معاك عشان نرتّب وصولك للأداة.",
+  },
+  gateSubmit: { en: "Request access", ar: "اطلب الوصول" },
+  gateSuccessTitle: { en: "You're on the list", ar: "تمام، سجّلناك" },
+  gateSuccessBody: {
+    en: "Thanks! Someone from our team will reach out soon to talk about access.",
+    ar: "شكرًا! حد من فريقنا هيتواصل معاك قريب عشان نتكلم عن الوصول.",
+  },
+  gateContactError: {
+    en: "Please add your name and an email or phone number.",
+    ar: "من فضلك اكتب اسمك وإيميل أو رقم موبايل.",
+  },
+  gateNote: {
+    en: "No spam. We'll only use this to reach out about access.",
+    ar: "مفيش سبام. هنستخدم ده بس عشان نتواصل معاك بخصوص الوصول.",
+  },
+
   // Lead capture
   leadTitle: { en: "Where should we send your report?", ar: "نبعتلك التقرير فين؟" },
   leadSubtitle: {
