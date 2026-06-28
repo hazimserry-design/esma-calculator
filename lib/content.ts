@@ -406,6 +406,19 @@ export const UI = {
     ar: "مفيش سبام. هنستخدم ده بس عشان نتواصل معاك بخصوص الوصول.",
   },
 
+  // Owner login (hidden URL)
+  ownerLoginTitle: { en: "Owner access", ar: "دخول المالك" },
+  ownerLoginBody: {
+    en: "Sign in to open the full tool.",
+    ar: "سجّل دخولك عشان تفتح الأداة كاملة.",
+  },
+  ownerPasswordLabel: { en: "Password", ar: "كلمة المرور" },
+  ownerLoginSubmit: { en: "Sign in", ar: "تسجيل الدخول" },
+  ownerLoginError: {
+    en: "Wrong email or password.",
+    ar: "الإيميل أو كلمة المرور غلط.",
+  },
+
   // Lead capture
   leadTitle: { en: "Where should we send your report?", ar: "نبعتلك التقرير فين؟" },
   leadSubtitle: {

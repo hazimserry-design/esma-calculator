@@ -6,6 +6,7 @@ import { Landing } from "@/components/Landing";
 import { Questionnaire } from "@/components/Questionnaire";
 import { Results } from "@/components/Results";
 import { AccessGate } from "@/components/AccessGate";
+import { OwnerLogin } from "@/components/OwnerLogin";
 import { CONFIG } from "@/lib/config";
 import { buildScores, calculateSplit } from "@/lib/engine";
 import {
@@ -44,6 +45,10 @@ export default function Page() {
   const [perWeek, setPerWeek] = useState(10);
   const [hydrated, setHydrated] = useState(false);
 
+  // Owner preview: unlocked via the hidden URL + login (see lib/config.ts).
+  const [owner, setOwner] = useState(false);
+  const [showOwnerLogin, setShowOwnerLogin] = useState(false);
+
   // Restore persisted progress.
   useEffect(() => {
     try {
@@ -61,6 +66,33 @@ export default function Page() {
     }
     setHydrated(true);
   }, []);
+
+  // Decide whether to grant owner access: a previously-unlocked device, or the
+  // hidden URL (`?access=homus`) which reveals the private login.
+  useEffect(() => {
+    try {
+      if (localStorage.getItem(CONFIG.ownerStorageKey) === "1") {
+        setOwner(true);
+        return;
+      }
+    } catch {
+      /* ignore */
+    }
+    const params = new URLSearchParams(window.location.search);
+    if (params.get(CONFIG.ownerAccessParam) === CONFIG.ownerAccessKey) {
+      setShowOwnerLogin(true);
+    }
+  }, []);
+
+  const unlockOwner = () => {
+    try {
+      localStorage.setItem(CONFIG.ownerStorageKey, "1");
+    } catch {
+      /* ignore */
+    }
+    setShowOwnerLogin(false);
+    setOwner(true);
+  };
 
   // Persist on change.
   useEffect(() => {
@@ -88,12 +120,16 @@ export default function Page() {
     localStorage.removeItem(STORAGE_KEY);
   };
 
-  if (CONFIG.accessLocked) {
+  if (CONFIG.accessLocked && !owner) {
     return (
       <div className="app-bg">
         <Navbar />
         <main className="relative">
-          <AccessGate />
+          {showOwnerLogin ? (
+            <OwnerLogin onSuccess={unlockOwner} />
+          ) : (
+            <AccessGate />
+          )}
         </main>
       </div>
     );

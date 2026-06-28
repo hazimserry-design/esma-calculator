@@ -27,4 +27,21 @@ export const CONFIG = {
    * Flip to false to reopen the funnel.
    */
   accessLocked: true,
+
+  /**
+   * Hidden owner-access preview.
+   *
+   * Normal visitors see the AccessGate above. The owner opens the tool via a
+   * secret URL — visiting `/?access=homus` reveals a private login. Entering the
+   * owner email + password below unlocks the full funnel (and is remembered on
+   * this device via `ownerStorageKey`).
+   *
+   * NOTE: this is a client-side preview gate, not real security — the value
+   * ships in the browser bundle, so don't use it to protect anything sensitive.
+   */
+  ownerAccessParam: "access",
+  ownerAccessKey: "homus",
+  ownerEmail: "homus@homus.com",
+  ownerPassword: "homus1234",
+  ownerStorageKey: "homus:owner:v1",
 } as const;
